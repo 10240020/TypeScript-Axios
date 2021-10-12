@@ -18,6 +18,7 @@ create.interface.request.use(async (config:AxiosRequestConfig) => {
     const token = Vx.state.stateToken;
     if(token) config.headers.Authorization = `${token}`; config.data = qs.stringify(config.data)
     cookies.get(token) ? config.headers.token = cookies.get(token) : config.headers.token = ''
+    config.headers['Content-Type']='application/x-www-form-urlencoded;charset=UTF-8'
     return config
 },async error=>{
     return await Promise.resolve(error)
