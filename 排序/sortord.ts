@@ -101,4 +101,8 @@ export default class sortord{
         // Return Value
         return this.QuickSort(this.interface.left).concat(Store, this.QuickSort(this.interface.right))
     }
+
+    /**
+     * New 
+     */
 }
