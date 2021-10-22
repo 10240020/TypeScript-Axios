@@ -52,7 +52,26 @@ export default class Manage {
     }
 
     /**
-     * 
+     * New Array Disperse
      */
+    toThousandArray = object =>{
+        let result = [],count = 0;
+        object = (object || 0).toString().split('');
+        for (let i = object.length - 1; i >= 0; i--){
+            count ++;
+            result.unshift(object[i]);
+            if(!(count % 3) && i != 0){
+                result.unshift(',')
+            }
+        }
+        return result.join('');
+    }
+
+    /**
+     * New ToString Operate
+     */
+    Operate = string =>{
+        
+    }
 
 }
