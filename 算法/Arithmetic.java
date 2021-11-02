@@ -19,3 +19,21 @@
         }
         return total;
     }
+
+    /**
+     * JAVA Sum Of Tow Numbers
+     */
+    public int ListNode addTwoNumbers(listNode l1, listNode l2){
+        listNode root  = new ListNode(0);
+        listNode cursor = root;
+        int carry = 0;
+        while(l1 != null || l2 != null || cursor != null){
+            int sumVal = (l1 != null ? l1.val : 0) + (l2 != null ? l2.val : 0) + carry;
+            carry = sumVal / 10;
+            listNode sumNode = new ListNode(sumVal % 10);
+            cursor = sumNode;
+            if(l1 != null) l1 = l1.next;
+            if(l2 != null) l2 = l2.next;
+        }
+        return root.next;
+    }

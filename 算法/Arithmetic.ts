@@ -3,7 +3,8 @@ export default class Arithmetic {
      *  Recursion Binary Tree
      */
     public newMap:any;
-    public TreeNode: any
+    public TreeNode: any;
+    public SumofNumbers:any;
     buildTree = (ready:any,order:any)  =>{
         // Each Value Of Subscript
         this.newMap = new Map();
@@ -64,5 +65,23 @@ export default class Arithmetic {
             total += root[index++] - min
         }
         return total
+    }
+
+    /**
+     * Typescript Sum Of Tow Numbers
+     */
+    SumOfNumbers = (l1:any,l2:any) => {
+        const root = new this.SumofNumbers(0);
+        let cursor = root;
+        let carray =  0;
+        while (l1 != null || l2 != null || cursor != null) {
+            const sumVal = ((l1 != null ? l1.next() : null) + (l2 != null ? l2.next() :0) + carray);
+            carray = sumVal / 10
+            const sumNode = new this.SumofNumbers(sumVal % 10); 
+            cursor = sumNode;
+            if(l1 != null) l1.next();
+            if(l2 != null) l2.next();
+        }
+        return root.next();
     }
 }
