@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./scroll.css">
+</head>
+
+<body>
+    <section class="scroll-container">
+        <div class="scroll-element js-scroll fade-in">13212313131</div>
+        <div class="scroll-caption">淡入动效</div>
+    </section>
+    <section class="scroll-container">
+        <div class="scroll-element js-scroll fade-in-bottom">13212313131</div>
+        <div class="scroll-caption">切入顶部动效</div>
+    </section>
+    <section class="scroll-container">
+        <div class="scroll-element js-scroll slide-left">13212313131</div>
+        <div class="scroll-caption">从左边切入动效</div>
+    </section>
+    <section class="scroll-container">
+        <div class="scroll-element js-scroll slide-right">13212313131</div>
+        <div class="scroll-caption">从右边切入动效</div>
+    </section>
+
+</body>
+<script>
+
+    const allJsScroll = document.querySelectorAll('.js-scroll')
+
+    // 计算页面
+    const elementView = (el, percentageScroll = 100) => {
+        const elementTop = el.getBoundingClientRect().top
+        return (elementTop <= (window.innerHeight || document.documentElement.clientHeight) - percentageScroll / 100)
+    }
+
+    // 添加类名
+    const displayScroll = (element) => {
+        element.classList.add('scrolled');
+    }
+
+    // 删除类名
+    const hideScrollElement = (element) => {
+        element.classList.remove('scrolled');
+    }
+
+    // 获取所有属性
+    const handleScrollAnimation = () => {
+        allJsScroll.forEach((el) => {
+            if (elementView(el, 100)) {
+                displayScroll(el)
+            } else {
+                hideScrollElement(el)
+            }
+        })
+    }
+
+    // 节流阀
+    let throttledAnimation = false;
+    const throttle = (callback ,time)=>{
+        if(throttledAnimation) return;
+        throttledAnimation = true;
+        setTimeout(()=>{
+            callback();
+            throttledAnimation = false
+        },time)
+    }
+
+    window.addEventListener('scroll', () => {
+        throttle(handleScrollAnimation(),250)
+    })
+
+</script>
+
+</html>
