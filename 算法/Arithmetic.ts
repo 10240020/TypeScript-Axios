@@ -84,4 +84,20 @@ export default class Arithmetic {
         }
         return root.next();
     }
+
+    /**
+     * Reverse Number
+     */
+    Reverse = x =>{
+        let rev = 0;
+        while(x !== null || x !== 0){
+            if(rev < Math.pow(-2,31) || rev > Math.pow(2,31)-1){
+                return 0;
+            }
+            const digit = x % 10;
+            x /= 10;
+            rev = rev * 10 + digit;
+        }
+        return rev;
+    }
 }
