@@ -111,7 +111,7 @@ export default class Arithmetic {
             let mid = Math.floor((right-left) / 2) + left;
             // 指针对判
             if(nums[mid] == target) return mid;
-            // 又针
+            // 右针
             else if(nums[mid] > target) right = mid - 1;
             // 左针
             else if(nums[mid] < target) left = mid + 1;
@@ -140,7 +140,7 @@ export default class Arithmetic {
     /**
      * searchInsertPosition
      */
-     searchInsertPosition = (array:Array<any>,target:number) =>{
+    searchInsertPosition = (array:Array<any>,target:number) =>{
         //  初始化分割成左右针
         let left = 0,right = array.length -1;
         while(left <= right){
@@ -148,5 +148,5 @@ export default class Arithmetic {
             if(target <= array[mid]) right = mid + 1;
             else left = mid - 1;
         }
-     }
+    }
 }

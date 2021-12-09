@@ -137,3 +137,26 @@
         return left;
     }
     
+
+    /**
+     * JAVA Double needle
+     * 双指针--双针
+     * 删除排序数组的重复项
+     */
+    public int Doublened(int [] nums) {
+        // 边界判断
+        if(nums == null; || nums.length == 0) return 0;
+        // 重复数字计算
+        int left = 0;
+        for(let right = 1; right < nums.length; k++){
+            if(nums[left] != nums[right]){
+                // 当左参数不等于右参数那么右针往前移动
+                nums[++left] = nums[right];
+            }
+        }
+        return ++left;
+    }
+
+    /**
+     * JAVA 
+     */
