@@ -100,4 +100,53 @@ export default class Arithmetic {
         }
         return rev;
     }
+
+    /**
+     * Binary search
+     */
+    BinarySearch = (nums:any,target:Number) =>{
+        let left = 0,right = nums.length - 1;
+        while(left < right){
+            // 中心指针
+            let mid = Math.floor((right-left) / 2) + left;
+            // 指针对判
+            if(nums[mid] == target) return mid;
+            // 又针
+            else if(nums[mid] > target) right = mid - 1;
+            // 左针
+            else if(nums[mid] < target) left = mid + 1;
+        }
+        return  -1;
+    }
+
+    /**
+     * isBadVersion
+     */
+    isBadVersion = isBadVersion =>{
+        return n=>{
+            let left = 0, right = n;
+            while(left < right){
+                // 中心针
+                let mid = Math.floor((right - left)/2)+left;
+                // 当传入的数在中心针时--上界
+                if(isBadVersion(mid)) right = mid;
+                // 下界
+                else left = mid -1
+            }
+            return left;
+        }
+    }
+
+    /**
+     * searchInsertPosition
+     */
+     searchInsertPosition = (array:Array<any>,target:number) =>{
+        //  初始化分割成左右针
+        let left = 0,right = array.length -1;
+        while(left <= right){
+            let mid = Math.floor(left + ((right - left) >> 1));
+            if(target <= array[mid]) right = mid + 1;
+            else left = mid - 1;
+        }
+     }
 }
