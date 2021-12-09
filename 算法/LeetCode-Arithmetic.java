@@ -158,5 +158,22 @@
     }
 
     /**
-     * JAVA 
+     * JAVA Double needle
+     * 双指针--双针
+     * 删除排序数组的重复项
      */
+    public int Doubleneedle(int [] nums){
+        if(nums != null){
+            int left = 0;
+            for(int right = 0; right < nums.length; right++){
+                if(nums[left] == nums[right]){
+                    nums[left] = nums[right];
+                }else{
+                    nums[++left] = nums[right];
+                }
+            }
+            return ++left;
+        }else{
+            return 0;
+        }
+    }

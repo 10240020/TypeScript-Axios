@@ -149,4 +149,24 @@ export default class Arithmetic {
             else left = mid - 1;
         }
     }
+
+    /**
+     * Double needle 
+     * 双针--双指针
+     */
+    Doublened = array =>{
+        if(array){  
+            let left = 1,right = 1;
+            while (left < array.length){
+                if(array[left] !== array[left - 1]){
+                    array[right] = array[left]
+                    ++ right;
+                }
+                ++left;
+            }
+            return right;
+        }else{
+            return 0;
+        }
+    }
 }
