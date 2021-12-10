@@ -177,3 +177,24 @@
             return 0;
         }
     }
+
+    /**
+     * JAVA Double needle
+     * 双指针--双针
+     * 有序数组的苹方
+     */
+    public int Doubleneedle(int [] nums){00
+        int n = nums.length;
+        int[] ans = new int[n];
+        for (int i = 0, j = n - 1, pos = n - 1; i <= j;) {
+            if (nums[i] * nums[i] > nums[j] * nums[j]) {
+                ans[pos] = nums[i] * nums[i];
+                ++i;
+            } else {
+                ans[pos] = nums[j] * nums[j];
+                --j;
+            }
+            --pos;
+        }
+        return ans;
+    }
