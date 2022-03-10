@@ -6,13 +6,15 @@ export default class {
 
     // FUNCTION
     GETQUERYURL = (params:String) => {
-        const queryWindow = (window.location.search.substring(1)).split('&');
-        for(let i = 0; i < queryWindow.length; i++) {
-            const query = queryWindow[i].split('=')
-            if(query[1] == params) {
-                return query[1];
+        var query = window.location.search.substring(1)
+        var newWindow = query.split('&');
+        for(let i = 0; i < newWindow.length; i++){
+            console.log(newWindow)
+            const pair = newWindow[i].split('=');
+            if(pair[0] == params){
+                return pair[1];
             }
         }
-        return ;
+        return false;
     }
 }
