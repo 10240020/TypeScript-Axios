@@ -1,0 +1,171 @@
+# TypeScript-Axios
+<template>
+	<view class="procurement">
+		<view class="procurementList" v-for="parms,index in order">
+			<view class="procurementOrderNumber">
+				<view class="orderNumber">
+					<text>商品：</text>
+					<text>{{parms.orderMark}}</text>
+				</view>
+			</view>
+			<view class="orderDetails">
+				<view class="orderChild" >
+					<view class="orderChildStatus">
+						<text>条码</text>
+						<image :src="parms.image" mode="aspectFill"  />
+					</view>
+					<view class="orderChildStatus">
+						<text>订货数</text>
+						<text>{{parms.orderNumber}}</text>
+					</view>
+					<view class="orderChildStatus">
+						<text>订货金额</text>
+						<text>{{parms.orderMoney}}</text>
+					</view>
+					<view class="orderChildStatus">
+						<text>订货价</text>
+						<text>{{parms.currentMoney}}</text>
+					</view>
+					<view class="orderChildStatus">
+						<text>受理数</text>
+						<view  class="conformity">
+							<text @click="operate.reduce(parms,index)" class="increase">-</text>
+							<text>{{parms.orderNumber}}</text>
+							<text @click="operate.Increase(parms,index)" class="reduce">+</text>
+						</view>
+					</view>
+					<view class="orderChildStatus">
+						<text>受理总价</text>
+						<text>{{parms.orderTotal == '' ? parms.orderNumber * parms.currentMoney : parms.orderTotal}}元</text>
+					</view>
+				</view>
+			</view>
+		</view>
+	</view>
+</template>
+
+<script lang="ts" setup>
+import { onMounted, reactive, watchEffect } from "vue";
+const parms = defineProps({
+	order:[],
+	details:[]
+})
+
+const status = reactive({
+	moneyCoupoment:[],
+	Money:0
+})
+
+
+const operate = {
+	reduce(current,index){
+		let data = parms.order
+		operate.checkedFunction(data,index,0)
+	},
+	Increase:<viod>(current,index)=>{
+		let data = parms.order
+		operate.checkedFunction(data,index,1)
+	},
+	// 价格计算
+	total(NumberTotail,currentMoney){
+		return (currentMoney * NumberTotail) / NumberTotail
+	},
+	// 选择方式
+	checkedFunction:<viod>(data,index,increase)=>{
+		data[index].checked = true
+		data.map((item,indexs)=>{
+			if(index == indexs){
+				if(data[indexs].checked == true){
+					let current = data[index].currentMoney,
+							orderNumber = data[index].orderNumber
+					operate.total(current,orderNumber)
+					increase == 1 ? data[index].orderNumber ++ : data[index].orderNumber --;
+				}
+			}
+		})
+	}
+}
+</script>
+
+<style lang="scss" scoped>
+.procurement{
+	.procurementList{
+		background: white;
+		border-radius: 10rpx;
+		margin-top: 30rpx;
+		.procurementOrderNumber{
+			.orderNumber{
+				padding: 30rpx;
+				border-bottom: 1px solid #EEEEEE;
+				display: flex;
+				align-items: center;
+				text{
+					font-size: 28rpx;
+				}
+				text:nth-child(1){
+					color: #999;
+				}
+			}
+		}
+		.orderDetails{
+			padding-left: 40rpx;
+			.orderChild{
+				width: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				flex-wrap: wrap;
+				margin-top: 20rpx;
+				.orderChildStatus{
+					display: flex;
+					flex-direction: column;
+					margin-bottom: 20rpx;
+					width: 33.33%;
+					text{
+						color: #999;
+						font-size: 28rpx;
+						margin-bottom: 10rpx;
+					}
+					image{
+						width: 140rpx;
+						height: 30rpx;
+					}
+					text:nth-last-child(1){
+						font-size: 32rpx;
+						color: #333;
+					}
+				}
+			}
+		}
+	}
+}
+
+// 整合
+.conformity{
+	display: flex;
+}
+
+.conformity text:nth-child(2){
+	color: #333!important;
+}
+
+// 增加
+.increase,
+.reduce{
+	width: 40rpx;
+	height: 40rpx;
+	background:#33D486;
+	color:white!important;
+	display: block;
+	text-align: center;
+	line-height: 40rpx;
+	margin-right: 10rpx;
+	border-radius: 5rpx;
+}
+
+.reduce{
+	margin-right: 0;
+	margin-left: 10rpx;
+}
+
+</style>
