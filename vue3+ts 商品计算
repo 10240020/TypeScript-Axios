@@ -1,4 +1,3 @@
-# TypeScript-Axios
 <template>
 	<view class="procurement">
 		<view class="procurementList" v-for="parms,index in order">
@@ -12,7 +11,7 @@
 				<view class="orderChild" >
 					<view class="orderChildStatus">
 						<text>条码</text>
-						<image :src="parms.image" mode="aspectFill"  />
+						<text>{{parms.barcode}}</text>
 					</view>
 					<view class="orderChildStatus">
 						<text>订货数</text>
@@ -53,25 +52,37 @@ const parms = defineProps({
 
 const status = reactive({
 	moneyCoupoment:[],
-	Money:0
+	Money:0,
+	total:0
 })
+
+onMounted(()=>{
+	operate.totalEmit()
+})
+
+const emit = defineEmits(['emitonchange'])
+const emitonchange = ()=>{
+	emit('emitonchange',status.total)
+}
 
 
 const operate = {
 	reduce(current,index){
 		let data = parms.order
-		operate.checkedFunction(data,index,0)
+		operate.checkedFunction(data,index,0,0)
+		emitonchange()
 	},
 	Increase:<viod>(current,index)=>{
 		let data = parms.order
-		operate.checkedFunction(data,index,1)
+		operate.checkedFunction(data,index,1,1)
+		emitonchange()
 	},
 	// 价格计算
 	total(NumberTotail,currentMoney){
 		return (currentMoney * NumberTotail) / NumberTotail
 	},
 	// 选择方式
-	checkedFunction:<viod>(data,index,increase)=>{
+	checkedFunction:<viod>(data,index,increase,totalType)=>{
 		data[index].checked = true
 		data.map((item,indexs)=>{
 			if(index == indexs){
@@ -80,8 +91,15 @@ const operate = {
 							orderNumber = data[index].orderNumber
 					operate.total(current,orderNumber)
 					increase == 1 ? data[index].orderNumber ++ : data[index].orderNumber --;
+					totalType == 1 ? status.total = Number(status.total) + Number(current) : status.total = status.total - current
 				}
 			}
+		})
+	},
+	// 总价方式
+	totalEmit:<viod>()=>{
+		parms.order.map((item,index)=>{
+			status.total += (parseFloat(parms.order[index].currentMoney)*parseInt(parms.order[index].orderNumber))
 		})
 	}
 }
@@ -89,6 +107,7 @@ const operate = {
 
 <style lang="scss" scoped>
 .procurement{
+	padding-bottom: 150rpx;
 	.procurementList{
 		background: white;
 		border-radius: 10rpx;
@@ -125,10 +144,6 @@ const operate = {
 						color: #999;
 						font-size: 28rpx;
 						margin-bottom: 10rpx;
-					}
-					image{
-						width: 140rpx;
-						height: 30rpx;
 					}
 					text:nth-last-child(1){
 						font-size: 32rpx;
